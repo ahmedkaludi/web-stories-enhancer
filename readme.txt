@@ -11,7 +11,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 This is the Web Stories Enhancer Plugin for showing the web stories to website with the help of shortcode.
 
 == Description ==
-This is the Web Stories Enhancer Plugin for showing the web stories to website with the help of shortcode.
+This is the Web Stories Enhancer Plugin for showing the web stories to website with the help of shortcode [web_stories_enhancer]
 
 == Installation ==
 1. Upload \"web-stories-enhancer.zip\" to the \"/wp-content/plugins/\" directory.
