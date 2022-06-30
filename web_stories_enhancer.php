@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name:  Web Stories Enhancer
-Plugin URI:   https://magazine3.company/ 
+Plugin URI:   https://wordpress.org/plugins/web-stories-enhancer/
 Description:  A short little description of the plugin. 
 Version:      1.0
 Author:       magazine3 
