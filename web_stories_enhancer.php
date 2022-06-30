@@ -81,31 +81,30 @@ if (!defined('ABSPATH')) exit;
           );
 
           $wse_loop = new WP_Query($wse_args);
-          // echo "<pre>";print_r(json_decode($wse_loop));die;
 
           if ($wse_loop->have_posts()) :
             while ($wse_loop->have_posts()) : $wse_loop->the_post();
 
-              $wse_content .= '<li class="'.$post->ID.'"><a href="' . get_permalink() . '"><div class="web_stories_article"><div class="web_stories_article_thumbnail">';
+              $wse_content .= '<li><a href="' . esc_url( get_permalink()) . '"><div class="web_stories_article"><div class="web_stories_article_thumbnail">';
               
               if($wse_active_status == 'makestories'):
                 $wse_postMeta = get_post_meta(get_the_ID());
                 $wse_posterImage = "https://ss.makestories.io/get?story=" . $wse_postMeta['story_id'][0];
                 if($wse_posterImage !=''){
-                $wse_content .= '<img class="makestories" src="' . $wse_posterImage . '" alt="' . get_the_title() . '"  />';
+                $wse_content .= '<img class="makestories" src="' . esc_url($wse_posterImage) . '" alt="' . esc_attr( get_the_title() ) . '"  />';
                 }
               endif;
               if($wse_active_status == 'webstories'):
                 if (has_post_thumbnail()) {
-                $wse_content .= '<img class="webstories" src="' . get_the_post_thumbnail_url(get_the_ID(), array(66, 66)) . '" alt="' . get_the_title() . '"  />';
+                $wse_content .= '<img class="webstories" src="' . esc_url(get_the_post_thumbnail_url(get_the_ID(), array(66, 66))) . '" alt="' . esc_attr( get_the_title() ) . '"  />';
                 }
               endif;
               
-              $wse_content .= '</div><div class="web_stories_article_title">' . get_the_title() . '</div></div></a></li>';
+              $wse_content .= '</div><div class="web_stories_article_title">' .esc_html( get_the_title()) . '</div></div></a></li>';
 
             endwhile;
           endif;
-          // wp_reset_postdata(); 
+          wp_reset_postdata(); 
 
           $wse_content .= '</ul></div></div></div>';
 
