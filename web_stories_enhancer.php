@@ -4,7 +4,7 @@ Plugin Name:  Web Stories Enhancer
 Plugin URI:   https://wordpress.org/plugins/web-stories-enhancer/
 Description:  A short little description of the plugin. 
 Version:      1.0
-Author:       magazine3 
+Author:       Magazine3 
 Author URI:   https://magazine3.company/
 License:      GPL2
 License URI:  https://www.gnu.org/licenses/gpl-2.0.html
@@ -14,11 +14,25 @@ Domain Path:  /magazine3
 
 // Exit if accessed directly.
 
+define('WEBSTEN_DIR_NAME', dirname( __FILE__ ));
+define('WEBSTEN_PLUGIN_URI', plugin_dir_url(__FILE__));
+define('WEBSTEN_PATH', dirname( __FILE__ ) );
+
 use Google\Web_Stories_Dependencies\AmpProject\Validator\Spec\Tag\Tr;
 
 if (!defined('ABSPATH')) exit;
 
+add_action('wp_print_scripts', 'websten_settings_js');
+function websten_settings_js(){
+   wp_enqueue_script('web_sten_admin_script',  WEBSTEN_PLUGIN_URI . 'assets/js/web-stories-enhancer.js', array('jquery'));
+}
 
+add_action( 'admin_enqueue_scripts', 'websten_settings_css' );
+function websten_settings_css(  ) {
+    wp_enqueue_style( 'web_sten_admin_styles', WEBSTEN_PLUGIN_URI . 'assets/css/web-stories-enhancer.css' );   
+}
+
+ 
 // if (!class_exists('Web_Stories_Enhancer_Shortcode')) {
   /**
    * Class contain form wise data serve
@@ -30,9 +44,32 @@ if (!defined('ABSPATH')) exit;
     public function __construct()
     {
       add_shortcode('web_stories_enhancer', array($this, 'webstoriesenhancer_webstories_story_shortcode'));
+      add_filter('plugin_action_links_' . basename(dirname(__FILE__)) . '/' . basename(__FILE__),
+      array('Web_Stories_Enhancer_Shortcode', 'plugin_action_links'));
 
     }
+    static function get_plugin_version() {
+      $plugin_data = get_file_data(__FILE__, array('version' => 'Version'), 'plugin');
+        Web_Stories_Enhancer_Shortcode::$version = $plugin_data['version'];
 
+       return $plugin_data['version'];
+    } // get_plugin_version
+
+    // check if plugin's admin page is shown
+    static function is_plugin_admin_page($page = 'settings') {
+      $current_screen = get_current_screen();
+        if ($page == 'settings' && $current_screen->id == 'settings_page_web-stories-enhancer') {
+          return true;
+        }
+      return false;
+    } // is_plugin_admin_page
+  // add settings link to plugins page
+      static function plugin_action_links($links) {
+        $settings_link = '<a href="' . esc_url(admin_url('options-general.php?page=web-stories-enhancer')) . '" title="Settings for Web stories enhancer">'.esc_html__( 'Settings' , 'web-stories-enhancer').'</a>';
+        array_unshift($links, $settings_link);
+
+        return $links;
+      } // plugin_action_links
 
 
     public function webstoriesenhancer_webstories_story_shortcode()
@@ -113,9 +150,32 @@ if (!defined('ABSPATH')) exit;
       // Return the wse_content
       return $wse_content;
     }
-
-
-   
+  
   }
+
+if ( is_admin() ) {
+  require(WEBSTEN_DIR_NAME.'/admin/web-stories-enhancer-admin.php');
+  require(WEBSTEN_DIR_NAME. "/includes/helper-function.php" );
+  require(WEBSTEN_DIR_NAME. "/admin/class.admin.php" );
+  require(WEBSTEN_DIR_NAME . '/includes/newsletter.php' );
+
+}  
+
+register_activation_hook(__FILE__, 'web_sten_activate');
+add_action('admin_init', 'web_sten_redirect');
+
+function web_sten_activate() {
+    add_option('web_sten_do_activation_redirect', true);
+}
+
+function web_sten_redirect() {
+    if (get_option('web_sten_do_activation_redirect', false)) {
+        delete_option('web_sten_do_activation_redirect');
+        if(!isset($_GET['activate-multi']))
+        {
+            wp_redirect("options-general.php?page=web-stories-enhancer#general-settings");
+        }
+    }
+}
 
 $Web_Stories_Enhancer_Shortcode = new Web_Stories_Enhancer_Shortcode();
