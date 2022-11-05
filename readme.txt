@@ -3,7 +3,7 @@ Contributors: magazine3
 Requires at least: 4.0
 Tested up to: 6.1
 Requires PHP: 5.6
-Stable tag: 1.0
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags:web stories, stories, amp, storytelling, google
@@ -30,5 +30,10 @@ We are actively developing this plugin and also providing technical support as w
 1. Add the shortcode \"[web_stories_enhancer]\" inside content or sidebar.
 
 == Changelog ==
+
+= 1.1 - 05 November 2022 =
+* New : Added setting page #2
+* New : Code & UI Improvement #3
+
 = 1.0 =
 * Initial release.
