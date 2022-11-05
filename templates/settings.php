@@ -17,7 +17,7 @@
       <ul>  <li><?php _e('Shortcode','web-stories-enhancer') ?> : <input type="text" class="wse-input" id="wse-input" value="[web_stories_enhancer]"  size="60" readonly>
       <div class="wse-tooltip">
       <button class="wse-btn" onclick="wse_copy()" onmouseout="wse_out()">
-        <span class="wse-tooltiptext" id="wse-tooltip"><?php _e('Copy URL','web-stories-enhancer') ?></span>
+        <span class="wse-tooltiptext" id="wse-tooltip"><?php _e('Copy Shortcode','web-stories-enhancer') ?></span>
         <?php _e('Copy','web-stories-enhancer') ?>
         </button>
       </div></li><ul>
