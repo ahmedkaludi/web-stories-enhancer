@@ -9,9 +9,7 @@ class Web_Stories_Enhancer_Shortcode
       add_shortcode('web_stories_enhancer', array($this, 'webstoriesenhancer_webstories_story_shortcode'));
 
     }
-
-
-
+    
     public function webstoriesenhancer_webstories_story_shortcode()
     {
 

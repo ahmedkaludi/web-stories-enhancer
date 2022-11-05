@@ -26,9 +26,10 @@ if (!defined('ABSPATH')) exit;
     public function __construct()
     {
         $this->defineConstants();
-        $this->addingHooks();
-        $this->addingShortcode();
+        $this->addHooks();
+        $this->addShortcode();
         $this->addAdminNotice();
+        $this->addAjaxSupportForm();
 
     } 
     private function defineConstants() {
@@ -38,10 +39,12 @@ if (!defined('ABSPATH')) exit;
       define( 'WEBSTORIES_ENHANCER_PLUGIN_FILE', __FILE__ );
       
 		}
-    private function addingHooks() {
+    private function addHooks() {
       add_action( 'admin_menu', array( $this, 'registerMenus' ) );
       add_filter( 'plugin_action_links_' . plugin_basename( WEBSTORIES_ENHANCER_PLUGIN_FILE ), array( $this, 'addSettingsPluginAction' ), 10, 4 );
       add_action( 'admin_enqueue_scripts', array( $this,'loadAdminStyles'));
+      register_activation_hook(__FILE__, array( $this,'wseActivate'));
+      add_action('admin_init',array( $this, 'wseRedirect'));
 		}
 
     public function registerMenus() {
@@ -67,7 +70,7 @@ if (!defined('ABSPATH')) exit;
       include WEBSTORIES_ENHANCER_PATH . 'templates/settings.php';
     }
 
-    public function addingShortcode() {
+    public function addShortcode() {
       // add shortcode only if Web stories / Make story plugin is installed and activated
       if ($this->checkDependablePlugins()) {
       require_once( WEBSTORIES_ENHANCER_PATH . '/includes/shortcode.php' );
@@ -111,6 +114,20 @@ if (!defined('ABSPATH')) exit;
        return true; 
       }
       return false;
+    }
+
+    public function wseActivate() {
+        add_option('wse_activation_redirect', true);
+    }
+
+    public function wseRedirect() {
+        if (get_option('wse_activation_redirect', false)) {
+            delete_option('wse_activation_redirect');
+            if(!isset($_GET['activate-multi']))
+            {
+                wp_redirect("options-general.php?page=web-stories-enhancer");
+            }
+        }
     }
 }
 
