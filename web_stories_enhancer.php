@@ -14,7 +14,6 @@ Domain Path:  /magazine3
 
 // Exit if accessed directly.
 
-use Google\Web_Stories_Dependencies\AmpProject\Validator\Spec\Tag\Tr;
 
 if (!defined('ABSPATH')) exit;
 
@@ -99,9 +98,12 @@ if (!defined('ABSPATH')) exit;
 
     public function addAdminNotice() {
       // Show notice if Web stories / Make story plugin is not active
-      if (!$this->checkDependablePlugins()) {
+      global $pagenow;
+
+      if (!$this->checkDependablePlugins() && ($pagenow == 'plugins.php' || $pagenow == 'index.php' || ($pagenow=='options-general.php' && isset($_GET['page']) && $_GET['page']=='web-stories-enhancer') ) ) {
+        $message=sprintf('<b>Web Stories Enhancer</b> will not work until <a href="%s" target="_blank">Web Stories by Google</a> or <a href="%s" target="_blank">MakeStories (for Web Stories) by MakeStories </a> is installed/activated.',"https://wordpress.org/plugins/web-stories/","https://wordpress.org/plugins/makestories-helper/");
         echo '<div class="notice notice-warning is-dismissible">
-                    <p>'.__(sprintf('<b>Web Stories Enhancer</b> will not work until <a href="%s" target="_blank">Web Stories by Google</a> or <a href="%s" target="_blank">MakeStories (for Web Stories) by MakeStories </a> is installed/activated.',"https://wordpress.org/plugins/web-stories/","https://wordpress.org/plugins/makestories-helper/"),'web-stories-enhancer').'</p>
+                    <p>'.__($message,'web-stories-enhancer').'</p>
                  </div>';
       } 
          
@@ -123,7 +125,7 @@ if (!defined('ABSPATH')) exit;
     public function wseRedirect() {
         if (get_option('wse_activation_redirect', false)) {
             delete_option('wse_activation_redirect');
-            if(!isset($_GET['activate-multi']))
+            if(!isset($_GET['activate-multi']) && $this->checkDependablePlugins())
             {
                 wp_redirect("options-general.php?page=web-stories-enhancer");
             }
