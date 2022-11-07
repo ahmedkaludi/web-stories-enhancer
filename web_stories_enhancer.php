@@ -27,7 +27,6 @@ if (!defined('ABSPATH')) exit;
         $this->defineConstants();
         $this->addHooks();
         $this->addShortcode();
-        $this->addAdminNotice();
         $this->addAjaxSupportForm();
 
     } 
@@ -44,6 +43,7 @@ if (!defined('ABSPATH')) exit;
       add_action( 'admin_enqueue_scripts', array( $this,'loadAdminStyles'));
       register_activation_hook(__FILE__, array( $this,'wseActivate'));
       add_action('admin_init',array( $this, 'wseRedirect'));
+      add_action( 'admin_notices', array( $this, 'addAdminNotice'));
 		}
 
     public function registerMenus() {
