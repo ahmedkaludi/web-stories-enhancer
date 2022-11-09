@@ -30,7 +30,7 @@ class Web_Stories_Enhancer_Shortcode
       }
 
       if($wse_active_status !='' && $wse_post_type !=''){
-          $wse_content .= '<style>.web_stories_enhancer_main{width: 100%;margin: 0 auto;margin: 10px auto;position: relative;clear: both;display: block;overflow: hidden;background: #fff;border-radius: 5px;}';
+          $wse_content .= '<style>.web_stories_enhancer_main{width: 100%;margin: 0 auto;margin: 10px auto;position: relative;clear: both;display: block;overflow: hidden;background: transparent;border-radius: 5px;}';
           $wse_content .= '.web_stories_enhancer_main_inner{border-radius: 8px;margin: 10px 0;}';
           $wse_content .= '.web_stories_enhancer_main_column{outline: none;overflow-y: hidden;}';
           $wse_content .= '#text-2{display:none;}';
