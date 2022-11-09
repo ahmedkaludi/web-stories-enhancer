@@ -2,15 +2,19 @@
    if ( ! defined( 'ABSPATH' ) ) {
    	exit;
    }
-   
+   $wse_tab="";
+   if(isset($_GET['wse_tab'])){$wse_tab=esc_attr($_GET['wse_tab']);}
    ?>
+   <script>
+      var wse_cur_tab="<?=$wse_tab?>";
+   </script>
 <div class="wrap">
    <div class="wse-container">
       <table><tr><td><a href="https://wordpress.org/plugins/web-stories-enhancer/" target="_blank"><img  class="wse-logo" src=<?php echo WEBSTORIES_ENHANCER_URL . '/assets/images/logo.png' ?> title="<?php _e( 'Web Stories Enhancer', 'web-stories-enhancer' ); ?>"/></a></td><td><h1><?php _e( 'Web Stories Enhancer', 'web-stories-enhancer' ); ?></h1></td></tr></table>
    </div>
    <div class="wse-tab">
-      <button class="wse-tablinks" onclick="openTab(event, 'wse-intro')" id="defaultOpen"><?php echo esc_html__('Dashboard', 'web-stories-enhancer') ?></button>
-      <button class="wse-tablinks" onclick="openTab(event, 'wse-help')"><?php echo esc_html__('Help &amp; Support', 'web-stories-enhancer') ?></button>  
+      <button class="wse-tablinks" onclick="openTab(event, 'wse-intro')" id="wse-tab-intro"><?php echo esc_html__('Dashboard', 'web-stories-enhancer') ?></button>
+      <button class="wse-tablinks" onclick="openTab(event, 'wse-help')" id="wse-tab-support"><?php echo esc_html__('Help &amp; Support', 'web-stories-enhancer') ?></button>  
    </div>
    <div id="wse-intro" class="wse-tabcontent">
    <p><?php printf('<b>Please note that this plugin require <a href="https://wordpress.org/plugins/web-stories/"  target="_blank">Web Stories by Google</a> or  <a href="https://wordpress.org/plugins/makestories-helper/" target="_blank">MakeStories (for Web Stories) by MakeStories</a> installed and activated to work.</b> ', 'web-stories-enhancer')?></p>

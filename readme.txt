@@ -1,12 +1,12 @@
 === Web Stories Enhancer - Level Up Your Web Stories ===
 Contributors: magazine3
+Tags:web stories, stories, amp, storytelling, google
 Requires at least: 4.0
 Tested up to: 6.1
 Requires PHP: 5.6
 Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Tags:web stories, stories, amp, storytelling, google
 
 
 This is the Web Stories Enhancer Plugin for showing the web stories to the website with the help of a shortcode.

@@ -13,13 +13,17 @@
     evt.currentTarget.className += " active";
   }
   
-  // Get the element with id="defaultOpen" and click on it
-  document.getElementById("defaultOpen").click();
+  // Get the element with id="wse-tab-intro" and click on it
+  document.getElementById('wse-tab-intro').click();
   jQuery(document).ready(function($) {
+  if(wse_cur_tab=='support')
+  {
+    document.getElementById('wse-tab-support').click();
+  }
   $(".wse-send-query").on("click", function(e){
     e.preventDefault();   
-    var message     = $("#gn_query_message").val();  
-    var email       = $("#gn_query_email").val();  
+    var message     = $("#wse_query_message").val();  
+    var email       = $("#wse_query_email").val();  
     
     if($.trim(message) !='' && $.trim(email) !='' && wseIsEmail(email) == true){
      $.ajax({
@@ -52,7 +56,7 @@
         if($.trim(email) == ''){
             alert('Please enter the email');
         }
-        if(gnIsEmail(email) == false){
+        if(wseIsEmail(email) == false){
             alert('Please enter a valid email');
         }
             
