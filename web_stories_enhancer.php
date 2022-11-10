@@ -9,7 +9,7 @@ Author URI:   https://magazine3.company/
 License:      GPL2
 License URI:  https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain:  web-stories-enhancer
-Domain Path:  /magazine3
+Domain Path:  languages
 */
 
 // Exit if accessed directly.
