@@ -24,7 +24,7 @@ If you have any feature requests, please add them to the forums section and we w
 
 We are actively developing this plugin and also providing technical support as well.
 
-= Features: =
+== Features ==
 
 * New - Dark mode compatible
 * Web Stories will be displayed in Instagram style
