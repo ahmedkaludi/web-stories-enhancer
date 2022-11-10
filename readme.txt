@@ -15,7 +15,7 @@ This is the Web Stories Enhancer Plugin for showing the web stories to the websi
 This is the Web Stories Enhancer Plugin for showing the web stories to the website with the help of shortcode [web_stories_enhancer].
 It shows Instagram-style latest stories in the round circle format which outputs with the help of Shortcake. It can be literally everywhere. 
 
-### Compatible Plugins  
+<strong> Compatible Plugins  </strong> <br>
 * Web Stories by Google (**[view](https://wordpress.org/plugins/web-stories/)** )
 * MakeStories (for Web Stories) by MakeStories (**[view](https://wordpress.org/plugins/makestories-helper/)** )
 * We plan to add many other plugin compatibilities in the future.
@@ -24,10 +24,17 @@ If you have any feature requests, please add them to the forums section and we w
 
 We are actively developing this plugin and also providing technical support as well.
 
+= Features: =
+
+* New - Dark mode compatible
+* Web Stories will be displayed in Instagram style
+* Display Web Stories anywhere using just a shortcode
+
+
 == Installation ==
 1. Upload \"web-stories-enhancer.zip\" to the \"/wp-content/plugins/\" directory.
-1. Activate the plugin through the \"Plugins\" menu in WordPress.
-1. Add the shortcode \"[web_stories_enhancer]\" inside content or sidebar.
+2. Activate the plugin through the \"Plugins\" menu in WordPress.
+3. Add the shortcode \"[web_stories_enhancer]\" inside content or sidebar.
 
 == Changelog ==
 
