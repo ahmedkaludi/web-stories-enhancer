@@ -68,7 +68,7 @@ Yes, you easily contact us by submitting the support form in plugin setting page
 
 == Changelog ==
 
-= 1.1 - 05 November 2022 =
+= 1.1 - 10 November 2022 =
 * New : Added setting page #2
 * New : Code & UI Improvement #3
 
