@@ -35,6 +35,8 @@
                       if(response['status'] =='t'){
                         $(".wse-query-success").show();
                         $(".wse-query-error").hide();
+                        $("#wse_query_message").val('');
+                        $("#wse_query_email").val(''); 
                       }else{                                  
                         $(".wse-query-success").hide();  
                         $(".wse-query-error").show();

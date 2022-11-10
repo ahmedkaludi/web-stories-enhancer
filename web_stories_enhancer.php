@@ -64,7 +64,7 @@ if (!defined('ABSPATH')) exit;
       );
       $plugin_actions['support'] = sprintf(
         '<a href="%s">' . _x( 'Support', 'Web Stories Enhancer support link', 'web-stories-enhancer' ) . '</a>',
-        admin_url( 'options-general.php?page=web-stories-enhancer' )
+        admin_url( 'options-general.php?page=web-stories-enhancer&wse_tab=support' )
       );
       return array_merge($actions,$plugin_actions );
     }
@@ -131,7 +131,7 @@ if (!defined('ABSPATH')) exit;
             delete_option('wse_activation_redirect');
             if(!isset($_GET['activate-multi']) && $this->checkDependablePlugins())
             {
-                wp_redirect("options-general.php?page=web-stories-enhancer&wse_tab=support");
+                wp_redirect("options-general.php?page=web-stories-enhancer");
             }
         }
     }
