@@ -61,10 +61,10 @@ Yes, you easily contact us by submitting the support form in plugin setting page
 == Screenshots ==
 1. Web Stories Enhancer settings
 2. Web Stories Enhancer settings
-3. Web Stories Enhancer support page
-4. Adding shortcode to posts
-5. Web Stories Enhancer shortcode preview light theme
-6. Web Stories Enhancer shortcode preview dark theme
+3. Adding shortcode to posts
+4. Web Stories Enhancer shortcode preview light theme
+5. Web Stories Enhancer shortcode preview dark theme
+6. Web Stories Enhancer support page
 
 == Changelog ==
 
