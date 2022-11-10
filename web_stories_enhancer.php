@@ -2,120 +2,141 @@
 /*
 Plugin Name:  Web Stories Enhancer
 Plugin URI:   https://wordpress.org/plugins/web-stories-enhancer/
-Description:  A short little description of the plugin. 
-Version:      1.0
-Author:       magazine3 
+Description:  Show Google Web Stories anywhere with the help of shortcode.
+Version:      1.1
+Author:       Magazine3 
 Author URI:   https://magazine3.company/
 License:      GPL2
 License URI:  https://www.gnu.org/licenses/gpl-2.0.html
-Text Domain:  magazine3
-Domain Path:  /magazine3
+Text Domain:  web-stories-enhancer
+Domain Path:  languages
 */
 
 // Exit if accessed directly.
 
-use Google\Web_Stories_Dependencies\AmpProject\Validator\Spec\Tag\Tr;
 
 if (!defined('ABSPATH')) exit;
 
+ if (!class_exists('Web_Stories_Enhancer')) {
 
-// if (!class_exists('Web_Stories_Enhancer_Shortcode')) {
-  /**
-   * Class contain form wise data serve
-   */
-  class Web_Stories_Enhancer_Shortcode
+  class Web_Stories_Enhancer
   {
-    // public $wse_active_status=array();
 
     public function __construct()
     {
-      add_shortcode('web_stories_enhancer', array($this, 'webstoriesenhancer_webstories_story_shortcode'));
+        $this->defineConstants();
+        $this->addHooks();
+        $this->addShortcode();
+        $this->addAjaxSupportForm();
 
+    } 
+    private function defineConstants() {
+      define( 'WEBSTORIES_ENHANCER_VERSION', '1.1' );
+      define( 'WEBSTORIES_ENHANCER_PATH', plugin_dir_path( __FILE__ ) );
+      define( 'WEBSTORIES_ENHANCER_URL', plugins_url( '', __FILE__) );
+      define( 'WEBSTORIES_ENHANCER_PLUGIN_FILE', __FILE__ );
+      
+		}
+    private function addHooks() {
+      add_action( 'admin_menu', array( $this, 'registerMenus' ) );
+      add_filter( 'plugin_action_links_' . plugin_basename( WEBSTORIES_ENHANCER_PLUGIN_FILE ), array( $this, 'addSettingsPluginAction' ), 10, 4 );
+      add_action( 'admin_enqueue_scripts', array( $this,'loadAdminStyles'));
+      register_activation_hook(__FILE__, array( $this,'wseActivate'));
+      add_action('admin_init',array( $this, 'wseRedirect'));
+      add_action( 'admin_notices', array( $this, 'addAdminNotice'));
+		}
+
+    public function registerMenus() {
+      add_options_page(
+        __( 'Web Stories Enhancer', 'web-stories-enhancer' ),
+        __( 'Web Stories Enhancer', 'web-stories-enhancer' ),
+        'manage_options',
+        'web-stories-enhancer',
+        array( $this, 'displaySettingsPage' )
+      );
     }
 
 
+    public function addSettingsPluginAction( $actions, $plugin_file, $plugin_data, $context ) {
+      $plugin_actions['settings'] = sprintf(
+        '<a href="%s">' . _x( 'Settings', 'Web Stories Enhancer settings link', 'web-stories-enhancer' ) . '</a>',
+        admin_url( 'options-general.php?page=web-stories-enhancer' )
+      );
+      $plugin_actions['support'] = sprintf(
+        '<a href="%s">' . _x( 'Support', 'Web Stories Enhancer support link', 'web-stories-enhancer' ) . '</a>',
+        admin_url( 'options-general.php?page=web-stories-enhancer&wse_tab=support' )
+      );
+      return array_merge($actions,$plugin_actions );
+    }
 
-    public function webstoriesenhancer_webstories_story_shortcode()
-    {
+    public function displaySettingsPage() {
+      include WEBSTORIES_ENHANCER_PATH . 'templates/settings.php';
+    }
 
-      $wse_content =  '';
-
-      if ( in_array( 'makestories-helper/makestories.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
-        // do stuff only if makestories-helper is installed and active
-        $wse_active_status = 'makestories';
-        $wse_post_type ='makestories_story';
-      }else if ( in_array( 'web-stories/web-stories.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
-        // do stuff only if web-stories is installed and active
-        $wse_active_status = 'webstories';
-        $wse_post_type ='web-story';
-      }else{
-        // do nothing
-        $wse_active_status = '';
-        $wse_post_type ='';
+    public function addShortcode() {
+      // add shortcode only if Web stories / Make story plugin is installed and activated
+      if ($this->checkDependablePlugins()) {
+      require_once( WEBSTORIES_ENHANCER_PATH . '/includes/shortcode.php' );
+      $Web_Stories_Enhancer_Shortcode = new Web_Stories_Enhancer_Shortcode();
       }
+		}
 
-      if($wse_active_status !='' && $wse_post_type !=''){
-          $wse_content .= '<style>.web_stories_enhancer_main{width: 100%;margin: 0 auto;margin: 10px auto;position: relative;clear: both;display: block;overflow: hidden;background: #fff;border-radius: 5px;}';
-          $wse_content .= '.web_stories_enhancer_main_inner{border-radius: 8px;margin: 10px 0;}';
-          $wse_content .= '.web_stories_enhancer_main_column{outline: none;overflow-y: hidden;}';
-          $wse_content .= '#text-2{display:none;}';
-          $wse_content .= '.web_stories_enhancer_main_column ul {list-style: none; display: flex;    margin: 0;}';
-          $wse_content .= '.web_stories_enhancer_main_column ul li{    list-style-type: none;text-align: center;}';
-          $wse_content .= '.web_stories_article_thumbnail{padding: 0;text-align: center;margin: 0 auto;line-height: 0;border: solid 1px #f00;border-radius: 50px;padding: 1px;}';
-          $wse_content .= '.web_stories_article_thumbnail img{border-radius:50%; width:66px; height:66px;}';
-          $wse_content .= '.web_stories_enhancer_main_column .web_stories_article{width: 76px;padding: 0 4px;-webkit-tap-highlight-color: rgba(0, 0, 0, 0);-webkit-tap-highlight-color: transparent;}';
-          $wse_content .= '.web_stories_enhancer_main_column .web_stories_article .web_stories_article_title{font-size: 13px;display: block;overflow: hidden;text-align: center;text-overflow: ellipsis;white-space: nowrap;}</style>';
+    public function addAjaxSupportForm() {
 
-          $wse_content .= '<div class="web_stories_enhancer_main">';
-          $wse_content .= '<div class="web_stories_enhancer_main_inner">';
-          $wse_content .= '<div class="web_stories_enhancer_main_column"><ul>';
+      require_once( WEBSTORIES_ENHANCER_PATH . '/includes/support-form.php' );
+      $Web_Stories_Enhancer_Support = new Web_Stories_Enhancer_Support();
+    
+		}
 
-
-
-          $wse_args = array(
-            'post_type' => $wse_post_type,
-            'post_status' => 'publish',
-            // 'posts_per_page' => -1, 
-            'orderby' => 'title',
-            'order' => 'ASC',
-          );
-
-          $wse_loop = new WP_Query($wse_args);
-
-          if ($wse_loop->have_posts()) :
-            while ($wse_loop->have_posts()) : $wse_loop->the_post();
-
-              $wse_content .= '<li><a href="' . esc_url( get_permalink()) . '"><div class="web_stories_article"><div class="web_stories_article_thumbnail">';
-              
-              if($wse_active_status == 'makestories'):
-                $wse_postMeta = get_post_meta(get_the_ID());
-                $wse_posterImage = "https://ss.makestories.io/get?story=" . $wse_postMeta['story_id'][0];
-                if($wse_posterImage !=''){
-                $wse_content .= '<img class="makestories" src="' . esc_url($wse_posterImage) . '" alt="' . esc_attr( get_the_title() ) . '"  />';
-                }
-              endif;
-              if($wse_active_status == 'webstories'):
-                if (has_post_thumbnail()) {
-                $wse_content .= '<img class="webstories" src="' . esc_url(get_the_post_thumbnail_url(get_the_ID(), array(66, 66))) . '" alt="' . esc_attr( get_the_title() ) . '"  />';
-                }
-              endif;
-              
-              $wse_content .= '</div><div class="web_stories_article_title">' .esc_html( get_the_title()) . '</div></div></a></li>';
-
-            endwhile;
-          endif;
-          wp_reset_postdata(); 
-
-          $wse_content .= '</ul></div></div></div>';
-
-        }
-
-      // Return the wse_content
-      return $wse_content;
+    public function loadAdminStyles($hook_suffix ) {
+      if($hook_suffix=="settings_page_web-stories-enhancer")
+      {
+        wp_enqueue_style('wse-admin-styles', WEBSTORIES_ENHANCER_URL .'/assets/css/wse-admin.css', array(),WEBSTORIES_ENHANCER_VERSION);
+        wp_enqueue_script('wse-admin-script', WEBSTORIES_ENHANCER_URL . '/assets/js/wse-admin.js', array('jquery'), WEBSTORIES_ENHANCER_VERSION, 'true' );
+        wp_localize_script('wse-admin-script', 'wse_script_vars', array(
+          'nonce' => wp_create_nonce( 'wse-admin-nonce' ),
+        )
+        );
+      }
     }
 
+    public function addAdminNotice() {
+      // Show notice if Web stories / Make story plugin is not active
+      global $pagenow;
 
-   
-  }
+      if (!$this->checkDependablePlugins() && ($pagenow == 'plugins.php' || $pagenow == 'index.php' || ($pagenow=='options-general.php' && isset($_GET['page']) && $_GET['page']=='web-stories-enhancer') ) ) {
+        $message=sprintf('<b>Web Stories Enhancer</b> will not work until <a href="%s" target="_blank">Web Stories by Google</a> or <a href="%s" target="_blank">MakeStories (for Web Stories) by MakeStories </a> is installed/activated.',"https://wordpress.org/plugins/web-stories/","https://wordpress.org/plugins/makestories-helper/");
+        echo '<div class="notice notice-warning is-dismissible">
+                    <p>'.__($message,'web-stories-enhancer').'</p>
+                 </div>';
+      } 
+         
+		}
 
-$Web_Stories_Enhancer_Shortcode = new Web_Stories_Enhancer_Shortcode();
+    private function checkDependablePlugins()
+    {
+      include_once ABSPATH . 'wp-admin/includes/plugin.php';
+      if (is_plugin_active( 'web-stories/web-stories.php' ) || is_plugin_active( 'makestories-helper/makestories.php' ) ) {
+       return true; 
+      }
+      return false;
+    }
+
+    public function wseActivate() {
+        add_option('wse_activation_redirect', true);
+    }
+
+    public function wseRedirect() {
+        if (get_option('wse_activation_redirect', false)) {
+            delete_option('wse_activation_redirect');
+            if(!isset($_GET['activate-multi']) && $this->checkDependablePlugins())
+            {
+                wp_redirect("options-general.php?page=web-stories-enhancer");
+            }
+        }
+    }
+}
+
+$Web_Stories_Enhancer = new Web_Stories_Enhancer();
+ }
+
