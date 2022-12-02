@@ -64,11 +64,132 @@
             
         }
         
-    }                        
+    } 
+    
+    
 
 });
+$(".wse_shortcode_type").on("click", function(e){
+  var cur_val=$("input[type=radio][name=wse_shortcode_type]:checked").val();
+  if(cur_val)
+  {
+    if(cur_val=='grid')
+    {
+      $('#wse-input').val('[web_stories_enhancer type="grid" columns="2"]') ;
+    }
+    else{
+      $('#wse-input').val('[web_stories_enhancer type="'+cur_val+'"]') ;
+    }
+  
+   localStorage.setItem("wse_shortcode_type", cur_val);
+  }
+  else
+  {
+    $('#wse-input').val('[web_stories_enhancer type="circle_carousel"]') ;
+  }
+});
+
+   var wse_type=localStorage.getItem("wse_shortcode_type");
+    $("input[type=radio][value="+wse_type+"]").click();
+    if($("#wse_enable_cta_ad:checked").val()==1)
+    {
+      $('.wse_val_tr').show(); 
+    }
+
+    $('.wse-cta-banner-upload').click(function(e) {	// Application Icon upload
+      e.preventDefault();
+      var wse_media_uploader = wp.media({
+        title: 'Banner For AD',
+        button: {
+          text: 'Select Image'
+        },
+        multiple: false  // Set this to true to allow multiple files to be selected
+      })
+      .on('select', function() {
+        var attachment = wse_media_uploader.state().get('selection').first().toJSON();
+        $('.wse_cta_banner').val(attachment.url);
+      })
+      .open();
+    });
+
+    
+    $('#wse_enable_cta_ad').click(function() {	
+      var default_value=false;
+      var check=$('#wse_enable_cta_ad:checked').val();
+      if(check=='1')
+      {
+        default_value=true;
+        $('.wse_val_tr').show(); 
+      }
+      else{
+        $('.wse_val_tr').hide(); 
+      }
+
+    });
+
+    $("#wse-setting-form").submit(function(){
+      
+      var cta_enable=($("#wse_enable_cta_ad:checked").val()=='1')?true:false;
+      var cta_banner =$("#wse_cta_banner").val();
+      var cta_banner_slide =$("#wse_cta_ad_slide").val();
+      var cta_btn_text =$("#wse_cta_btn_text").val();
+      var cta_btn_link =$("#wse_cta_btn_link").val();
+
+      if(cta_enable)
+      {
+        if(cta_banner && cta_banner_slide && cta_btn_text && cta_btn_link)
+        {
+          if(wseIsImgUrl(cta_banner))
+          {
+            if(isValidUrl(cta_btn_link))
+            {
+          $.ajax({
+            type: "POST",    
+            url:ajaxurl,                    
+            dataType: "json",
+            data:{action:"wse_save_settings",cta_enable:cta_enable,cta_btn_link:cta_btn_link,cta_btn_text:cta_btn_text,cta_banner_slide:cta_banner_slide,cta_banner:cta_banner,wse_security_nonce:wse_script_vars.nonce},
+            success:function(response){                       
+              if(response['status'] =='t'){
+                alert('Settings Sucessfully Saved'); 
+              }else{                                  
+              
+               alert('Settings were not saved');
+              }
+            },
+            error: function(response){                    
+            console.log(response);
+            }
+            }); 
+          }
+          else
+          {
+            alert('Invalid Link url.');
+          }
+          }
+          else{
+            alert('Invalid Image url. Please upload image again');
+          }
+        }
+        else
+        {
+          alert('Please fill mandatory fields (*)');
+        }
+      }
+
+
+    });
+
+
   });
 
+  function wseIsImgUrl(url) {
+    const img = new Image();
+    img.src = url;
+    return new Promise((resolve) => {
+      img.onerror = () => resolve(false);
+      img.onload = () => resolve(true);
+    });
+  }
   function wseIsEmail(email) {
     var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     return regex.test(email);
@@ -86,4 +207,14 @@ function wse_copy() {
 function wse_out() {
   var tooltip = document.getElementById("wse-tooltip");
   tooltip.innerHTML = "Copy Shortcode";
+}
+
+function isValidUrl(urlString) {
+  var urlPattern = new RegExp('^(https?:\\/\\/)?'+ // validate protocol
+  '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // validate domain name
+  '((\\d{1,3}\\.){3}\\d{1,3}))'+ // validate OR ip (v4) address
+  '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // validate port and path
+  '(\\?[;&a-z\\d%_.~+=-]*)?'+ // validate query string
+  '(\\#[-a-z\\d_]*)?$','i'); // validate fragment locator
+return !!urlPattern.test(urlString);
 }
