@@ -59,16 +59,16 @@ class Web_Stories_Enhancer_Shortcode
         else if( $atts['type']=='box_carousel')
         {
           
-          $wse_content .= '<style>.web_stories_enhancer_main{width: 100%;margin: 0 auto;margin: 10px auto;position: relative;clear: both;display: block;overflow: hidden;background: transparent;border-radius: 5px;}';
-          $wse_content .= '.web_stories_enhancer_main_inner{border-radius: 8px;margin: 10px 0;}';
-          $wse_content .= '.web_stories_enhancer_main_column{outline: none;overflow-y: hidden;}';
-          $wse_content .= '#text-2{display:none;}';
-          $wse_content .= '.web_stories_enhancer_main_column ul {list-style: none; display: flex;    margin: 0;}';
-          $wse_content .= '.web_stories_enhancer_main_column ul li{    list-style-type: none;text-align: center;}';
-          $wse_content .= '.web_stories_article_thumbnail{padding: 0;text-align: center;margin: 0 auto;line-height: 0;border-radius: 50px;padding: 1px;}';
-          $wse_content .= '.web_stories_article_thumbnail img{border-radius: 5px;width: 180px;height: 270px;}';
-          $wse_content .= '.web_stories_enhancer_main_column .web_stories_article{width: 190px;padding: 0 4px;-webkit-tap-highlight-color: rgba(0, 0, 0, 0);-webkit-tap-highlight-color: transparent;}';
-          $wse_content .= '.web_stories_enhancer_main_column .web_stories_article .web_stories_article_title{font-size: 13px;display: block;overflow: hidden;text-align: center;text-overflow: ellipsis;white-space: nowrap;}';
+          $wse_content .= '<style>.box_carousel .web_stories_enhancer_main{width: 100%;margin: 0 auto;margin: 10px auto;position: relative;clear: both;display: block;overflow: hidden;background: transparent;border-radius: 5px;}';
+          $wse_content .= '.box_carousel .web_stories_enhancer_main_inner{border-radius: 8px;margin: 10px 0;}';
+          $wse_content .= '.box_carousel .web_stories_enhancer_main_column{outline: none;overflow-y: hidden;}';
+          $wse_content .= '.box_carousel #text-2{display:none;}';
+          $wse_content .= '.box_carousel .web_stories_enhancer_main_column ul {list-style: none; display: flex;    margin: 0;}';
+          $wse_content .= '.box_carousel .web_stories_enhancer_main_column ul li{    list-style-type: none;text-align: center;}';
+          $wse_content .= '.box_carousel .web_stories_article_thumbnail{padding: 0;text-align: center;margin: 0 auto;line-height: 0;border:none;border-radius: 50px;padding: 1px;}';
+          $wse_content .= '.box_carousel .web_stories_article_thumbnail img{border-radius: 5px;width: auto;height:auto;}';
+          $wse_content .= '.box_carousel .web_stories_enhancer_main_column .web_stories_article{width: 100px;padding: 0 4px;-webkit-tap-highlight-color: rgba(0, 0, 0, 0);-webkit-tap-highlight-color: transparent;}';
+          $wse_content .= '.box_carousel .web_stories_enhancer_main_column .web_stories_article .web_stories_article_title{font-size: 13px;display: block;overflow: hidden;text-align: center;text-overflow: ellipsis;white-space: nowrap;}';
           $wse_content .= '</style>';
 
           
@@ -81,21 +81,22 @@ class Web_Stories_Enhancer_Shortcode
           {
             $width=intval(100/intval($atts['columns']));
           }
-          $wse_content .= '<style>.web_stories_enhancer_main{width: 100%;margin: 0 auto;margin: 10px auto;position: relative;clear: both;display: block;overflow: hidden;background: transparent;border-radius: 5px;}';
-          $wse_content .= '.web_stories_enhancer_main_inner{border-radius: 8px;margin: 10px 0;}';
-          $wse_content .= '.web_stories_enhancer_main_column{outline: none;overflow-y: hidden;}';
-          $wse_content .= '#text-2{display:none;}';
-          $wse_content .= '.web_stories_enhancer_main_column ul {list-style: none;   margin: 0;}';
-          $wse_content .= '.web_stories_enhancer_main_column ul li{    list-style-type: none;text-align: center;float:left;width:'.$width.'%}';
-          $wse_content .= '.web_stories_article_thumbnail{padding: 0;text-align: center;margin: 0 auto;line-height: 0;border-radius: 50px;padding: 1px;}';
-          $wse_content .= '.web_stories_article_thumbnail img{border-radius: 5px;width: 180px;height: 270px;}';
-          $wse_content .= '.web_stories_enhancer_main_column .web_stories_article{width: 190px;padding: 0 4px;-webkit-tap-highlight-color: rgba(0, 0, 0, 0);-webkit-tap-highlight-color: transparent;}';
-          $wse_content .= '.web_stories_enhancer_main_column .web_stories_article .web_stories_article_title{font-size: 13px;display: block;overflow: hidden;text-align: center;text-overflow: ellipsis;white-space: nowrap;}';
+          $wse_content .= '<style>.grid .web_stories_enhancer_main{width: 100%;margin: 0 auto;margin: 10px auto;position: relative;clear: both;display: block;overflow: hidden;background: transparent;border-radius: 5px;}';
+          $wse_content .= '.grid .web_stories_enhancer_main_inner{border-radius: 8px;margin: 10px 0;}';
+          $wse_content .= '.grid .web_stories_enhancer_main_column{outline: none;overflow-y: hidden;}';
+          $wse_content .= '.grid #text-2{display:none;}';
+          $wse_content .= '.grid .web_stories_enhancer_main_column ul {list-style: none; display:block; margin: 0;}';
+          $wse_content .= '.grid .web_stories_enhancer_main_column ul li{    list-style-type: none;text-align: center;float:left;width:'.$width.'%}';
+          $wse_content .= '.grid .web_stories_article_thumbnail{padding: 0;text-align: center;margin: 0 auto;border:none;line-height: 0;border-radius: 50px;padding: 1px;}';
+          $wse_content .= '.grid .web_stories_article_thumbnail img{border-radius: 5px;width: 180px;height: 270px;}';
+          $wse_content .= '.grid .web_stories_enhancer_main_column .web_stories_article{width: 190px;padding: 0 4px;-webkit-tap-highlight-color: rgba(0, 0, 0, 0);-webkit-tap-highlight-color: transparent;}';
+          $wse_content .= '.grid .web_stories_enhancer_main_column .web_stories_article .web_stories_article_title{font-size: 13px;display: block;overflow: hidden;text-align: center;text-overflow: ellipsis;white-space: nowrap;}';
+          $wse_content .= '@media only screen and (max-width: 600px) {.grid .web_stories_enhancer_main_column ul li{ width:50%}}';
           $wse_content .= '</style>';
           
         }
       
-          $wse_content .= '<div class="web_stories_enhancer_main">';
+          $wse_content .= '<div class="'.$atts['type'].' web_stories_enhancer_main">';
           $wse_content .= '<div class="web_stories_enhancer_main_inner">';
           $wse_content .= '<div class="web_stories_enhancer_main_column"><ul>';
 
@@ -125,7 +126,19 @@ class Web_Stories_Enhancer_Shortcode
               endif;
               if($wse_active_status == 'webstories'):
                 if (has_post_thumbnail()) {
-                $wse_content .= '<img class="webstories" src="' . esc_url(get_the_post_thumbnail_url(get_the_ID(), array(66, 66))) . '" alt="' . esc_attr( get_the_title() ) . '"  />';
+                  if( $atts['type']=='circle_carousel')
+                  {
+                    $thumbnail=get_the_post_thumbnail_url(get_the_ID(), array(66, 66));
+                  }
+                  else if( $atts['type']=='grid')
+                  {
+                    $thumbnail=get_the_post_thumbnail_url(get_the_ID(), array(360, 540));
+                  }else{
+
+                    $thumbnail=get_the_post_thumbnail_url(get_the_ID(), 'medium');
+                  }
+                 
+                $wse_content .= '<img class="webstories" src="' . esc_url($thumbnail) . '" alt="' . esc_attr( get_the_title() ) . '"  />';
                 }
               endif;
               
@@ -159,7 +172,7 @@ class Web_Stories_Enhancer_Shortcode
         {
           
           $settings=get_option('wse_settings');
-          if(isset($settings['cta_enable']) && $settings['cta_enable']==true && isset($settings['cta_banner'])&& isset($settings['cta_btn_link']))
+          if(isset($settings['cta_enable']) && $settings['cta_enable']==1 && isset($settings['cta_banner'])&& isset($settings['cta_btn_link']))
           {
 
               $our_ad_slide='<amp-story-page id="797f2fd5-3d50-4efa-96e7-82adde43f73d" auto-advance-after="7s" class="i-amphtml-layout-container" i-amphtml-layout="container">

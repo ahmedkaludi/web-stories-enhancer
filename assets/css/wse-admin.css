@@ -211,3 +211,7 @@
   visibility: visible;
   opacity: 1;
 }
+
+.wse-table-shortcode tr td{
+ padding-top:2%;
+}

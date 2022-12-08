@@ -69,28 +69,7 @@
     
 
 });
-$(".wse_shortcode_type").on("click", function(e){
-  var cur_val=$("input[type=radio][name=wse_shortcode_type]:checked").val();
-  if(cur_val)
-  {
-    if(cur_val=='grid')
-    {
-      $('#wse-input').val('[web_stories_enhancer type="grid" columns="2"]') ;
-    }
-    else{
-      $('#wse-input').val('[web_stories_enhancer type="'+cur_val+'"]') ;
-    }
-  
-   localStorage.setItem("wse_shortcode_type", cur_val);
-  }
-  else
-  {
-    $('#wse-input').val('[web_stories_enhancer type="circle_carousel"]') ;
-  }
-});
 
-   var wse_type=localStorage.getItem("wse_shortcode_type");
-    $("input[type=radio][value="+wse_type+"]").click();
     if($("#wse_enable_cta_ad:checked").val()==1)
     {
       $('.wse_val_tr').show(); 
@@ -129,14 +108,13 @@ $(".wse_shortcode_type").on("click", function(e){
 
     $("#wse-setting-form").submit(function(){
       
-      var cta_enable=($("#wse_enable_cta_ad:checked").val()=='1')?true:false;
+      var cta_enable=($("#wse_enable_cta_ad:checked").val()=='1')?1:0;
       var cta_banner =$("#wse_cta_banner").val();
       var cta_banner_slide =$("#wse_cta_ad_slide").val();
       var cta_btn_text =$("#wse_cta_btn_text").val();
       var cta_btn_link =$("#wse_cta_btn_link").val();
 
-      if(cta_enable)
-      {
+    
         if(cta_banner && cta_banner_slide && cta_btn_text && cta_btn_link)
         {
           if(wseIsImgUrl(cta_banner))
@@ -174,7 +152,7 @@ $(".wse_shortcode_type").on("click", function(e){
         {
           alert('Please fill mandatory fields (*)');
         }
-      }
+      
 
 
     });
@@ -195,18 +173,24 @@ $(".wse_shortcode_type").on("click", function(e){
     return regex.test(email);
 }
 
-function wse_copy() {
-  var copyText = document.getElementById("wse-input");
-  copyText.select();
-  copyText.setSelectionRange(0, 99999);
-  navigator.clipboard.writeText(copyText.value);
-  var tooltip = document.getElementById("wse-tooltip");
-  tooltip.innerHTML = "Shortcode Copied";
+function wse_copy(id) {
+  if(id)
+  {
+    var copyText = document.getElementById("wse-input-"+id);
+    copyText.select();
+    copyText.setSelectionRange(0, 99999);
+    navigator.clipboard.writeText(copyText.value);
+    var tooltip = document.getElementById("wse-tooltip-"+id);
+    tooltip.innerHTML = "Shortcode Copied";
+  }
 }
 
-function wse_out() {
-  var tooltip = document.getElementById("wse-tooltip");
-  tooltip.innerHTML = "Copy Shortcode";
+function wse_out(id) {
+  if(id)
+  {
+    var tooltip = document.getElementById("wse-tooltip-"+id);
+    tooltip.innerHTML = "Copy Shortcode";
+  }
 }
 
 function isValidUrl(urlString) {
