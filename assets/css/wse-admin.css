@@ -215,3 +215,7 @@
 .wse-table-shortcode tr td{
  padding-top:2%;
 }
+.wse_preview_link {
+  text-decoration: none;
+  font-size: 12px;
+}

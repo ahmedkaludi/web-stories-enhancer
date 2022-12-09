@@ -4,6 +4,8 @@
    }
    $wse_tab="";
    if(isset($_GET['wse_tab'])){$wse_tab=esc_attr($_GET['wse_tab']);}
+
+   $wse_req_plugin=get_webstory_plugin_details();
    ?>
    <script>
       var wse_cur_tab="<?=$wse_tab?>";
@@ -14,47 +16,52 @@
    </div>
    <div class="wse-tab">
       <button class="wse-tablinks" onclick="openTab(event, 'wse-intro')" id="wse-tab-intro"><?php echo esc_html__('Settings', 'web-stories-enhancer') ?></button>
-      <button class="wse-tablinks" onclick="openTab(event, 'wse-advert')" id="wse-tab-intro"><?php echo esc_html__('Advertisement', 'web-stories-enhancer') ?></button>
+      <button class="wse-tablinks" onclick="openTab(event, 'wse-advert')" id="wse-tab-intro"><?php echo esc_html__('Advertisment Inserter', 'web-stories-enhancer') ?></button>
       <button class="wse-tablinks" onclick="openTab(event, 'wse-help')" id="wse-tab-support"><?php echo esc_html__('Help &amp; Support', 'web-stories-enhancer') ?></button>  
    </div>
    <div id="wse-intro" class="wse-tabcontent">
+      <?php if(isset($wse_req_plugin['wse_active_status']) && empty($wse_req_plugin['wse_active_status'])) {?>}
    <p><?php printf('<b>Please note that this plugin require <a href="https://wordpress.org/plugins/web-stories/"  target="_blank">Web Stories by Google</a> or  <a href="https://wordpress.org/plugins/makestories-helper/" target="_blank">MakeStories (for Web Stories) by MakeStories</a> installed and activated to work.</b> ', 'web-stories-enhancer')?></p>
+   <?php } ?> 
   <h3>Display Shortcodes</h3>
   
    <table class="wse-table-shortcode">
       <tr>
          <td><b><?php _e('Circle Carousel','web-stories-enhancer') ?> </b> </td>
-         <td>:
+         <td>
             <input type="text" class="wse-input" id="wse-input-1" value='[web_stories_enhancer type="circle_carousel"]'  size="60" readonly>
             <div class="wse-tooltip">
             <button class="wse-btn" onclick="wse_copy(1)" onmouseout="wse_out(1)">
             <span class="wse-tooltiptext" class="wse-tooltip" id="wse-tooltip-1"><?php _e('Copy Shortcode','web-stories-enhancer') ?></span>
             <?php _e('Copy','web-stories-enhancer') ?>
             </button></div>
+            <a class="wse_preview_link" href="<?php echo  WEBSTORIES_ENHANCER_URL .'/assets/images/circle_carousel.png';?>" target="_blank">Preview</a>
          </td>
       </tr>
 
       <tr>
          <td><b><?php _e('Box Carousel','web-stories-enhancer') ?> </b> </td>
-         <td>:
+         <td>
             <input type="text" class="wse-input" id="wse-input-2" value='[web_stories_enhancer type="box_carousel"]'  size="60" readonly>
             <div class="wse-tooltip">
             <button class="wse-btn" onclick="wse_copy(2)" onmouseout="wse_out(2)">
             <span class="wse-tooltiptext" class="wse-tooltip" id="wse-tooltip-2"><?php _e('Copy Shortcode','web-stories-enhancer') ?></span>
             <?php _e('Copy','web-stories-enhancer') ?>
             </button></div>
+            <a class="wse_preview_link" href="<?php echo  WEBSTORIES_ENHANCER_URL .'/assets/images/box_carousel.png';?>" target="_blank">Preview</a>
          </td>
       </tr>
 
       <tr>
          <td><b><?php _e('Grid','web-stories-enhancer') ?> </b> </td>
-         <td>:
+         <td>
             <input type="text" class="wse-input" id="wse-input-3" value='[web_stories_enhancer type="grid" columns="3"]'  size="60" readonly>
             <div class="wse-tooltip">
             <button class="wse-btn" onclick="wse_copy(3)" onmouseout="wse_out(3)">
             <span class="wse-tooltiptext" class="wse-tooltip" id="wse-tooltip-3"><?php _e('Copy Shortcode','web-stories-enhancer') ?></span>
             <?php _e('Copy','web-stories-enhancer') ?>
             </button></div>
+            <a class="wse_preview_link" href="<?php echo  WEBSTORIES_ENHANCER_URL .'/assets/images/grid.png';?>" target="_blank">Preview</a>
          </td>
       </tr>
    
@@ -71,13 +78,13 @@
          <tr>
             <th><?php _e( 'Auto Insert Ad Story', 'web-stories-enhancer' ); ?></th>
             <td>
-               <input type="checkbox" name="wse_enable_cta_ad" id="wse_enable_cta_ad"  value="1" <?php if(isset( $settings['cta_enable']) && $settings['cta_enable']==1){ echo 'checked';}?> />
-               <label ><?php _e( 'Add your CTA banner AD in Google Webstories', 'web-stories-enhancer' ); ?></label>
+            <label > <input type="checkbox" name="wse_enable_cta_ad" id="wse_enable_cta_ad"  value="1" <?php if(isset( $settings['cta_enable']) && $settings['cta_enable']==1){ echo 'checked';}?> />
+               <?php _e( 'Add your CTA banner AD in Google Webstories', 'web-stories-enhancer' ); ?></label>
             </td>
          </tr>
         
          <tr class="wse_val_tr" style="display:none">
-            <th><?php _e('CTA Banner (640 by 853 px) *', 'web-stories-enhancer'); ?></th>
+            <th><?php _e('Ad Banner Image (640 x 853)', 'web-stories-enhancer'); ?></th>
             <td>
          <input type="text" name="wse_cta_banner" id="wse_cta_banner" class="wse_cta_banner"  value="<?php echo isset( $settings['cta_banner'] ) ? esc_attr( $settings['cta_banner']) : ''; ?>" >
       <button type="button" class="button wse-cta-banner-upload" data-editor="content">
@@ -89,19 +96,19 @@
          </td> </tr>
 
          <tr class="wse_val_tr" style="display:none">
-            <th><?php _e( 'Add CTA at slide  *', 'web-stories-enhancer' ); ?></th>
+            <th><?php _e( 'Auto Insert on every Nth Slide', 'web-stories-enhancer' ); ?></th>
             <td>
          <input type="number" name="wse_cta_ad_slide" id="wse_cta_ad_slide"  min="1" value="<?php if(isset($settings['cta_banner_slide'])){ echo esc_attr($settings['cta_banner_slide']);}?>" />
          </td>
          </tr>
          <tr class="wse_val_tr" style="display:none">
-            <th><?php _e( 'CTA button text * ', 'web-stories-enhancer' ); ?></th>
+            <th><?php _e( 'AD CTA Button Text', 'web-stories-enhancer' ); ?></th>
             <td>
          <input type="text" name="wse_cta_btn_text" id="wse_cta_btn_text"  value="<?php if(isset($settings['cta_btn_text'])){echo esc_attr($settings['cta_btn_text']);}?>"  />
          </td>
          </tr>
          <tr class="wse_val_tr" style="display:none">
-            <th><?php _e( 'CTA button link * ', 'web-stories-enhancer' ); ?></th>
+            <th><?php _e( 'AD CTA Button Link ', 'web-stories-enhancer' ); ?></th>
             <td>
          <input type="url" name="wse_cta_btn_link" id="wse_cta_btn_link"  value="<?php if(isset($settings['cta_btn_link'])){ echo esc_url($settings['cta_btn_link']);}?>"  />
          </td>

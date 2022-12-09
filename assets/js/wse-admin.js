@@ -26,6 +26,7 @@
     var email       = $("#wse_query_email").val();  
     
     if($.trim(message) !='' && $.trim(email) !='' && wseIsEmail(email) == true){
+      $('.wse-send-query').text('Processing...'); 
      $.ajax({
                     type: "POST",    
                     url:ajaxurl,                    
@@ -37,13 +38,16 @@
                         $(".wse-query-error").hide();
                         $("#wse_query_message").val('');
                         $("#wse_query_email").val(''); 
+                        $('.wse-send-query').text('Send Support Request'); 
                       }else{                                  
                         $(".wse-query-success").hide();  
                         $(".wse-query-error").show();
+                        $('.wse-send-query').text('Send Support Request'); 
                       }
                     },
                     error: function(response){                    
                     console.log(response);
+                    $('.wse-send-query').text('Send Support Request'); 
                     }
                     });   
     }else{

@@ -105,7 +105,7 @@ class Web_Stories_Enhancer_Shortcode
           $wse_args = array(
             'post_type' => $wse_post_type,
             'post_status' => 'publish',
-            // 'posts_per_page' => -1, 
+            'posts_per_page' => 20, 
             'orderby' => 'title',
             'order' => 'ASC',
           );
