@@ -4,7 +4,7 @@ Tags:web stories, stories, amp, storytelling, google
 Requires at least: 4.0
 Tested up to: 6.1
 Requires PHP: 5.6
-Stable tag: 1.1
+Stable tag: 1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -26,6 +26,7 @@ We are actively developing this plugin and also providing technical support as w
 
 == Features ==
 
+* New - Advertisment Inserter for Webstories
 * New - Dark mode compatible
 * Web Stories will be displayed in Instagram style
 * Display Web Stories anywhere using just a shortcode
@@ -67,6 +68,10 @@ Yes, you easily contact us by submitting the support form in plugin setting page
 6. Web Stories Enhancer support page
 
 == Changelog ==
+
+= 1.2 - 10 December 2022 =
+* New : Advertisment Inserter for Webstories  #5
+* New : Shortcode with 3 listing types #5
 
 = 1.1 - 10 November 2022 =
 * New : Added setting page #2

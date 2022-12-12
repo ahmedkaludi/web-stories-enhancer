@@ -3,7 +3,7 @@
 Plugin Name:  Web Stories Enhancer
 Plugin URI:   https://wordpress.org/plugins/web-stories-enhancer/
 Description:  Show Google Web Stories anywhere with the help of shortcode.
-Version:      1.1
+Version:      1.2
 Author:       Magazine3 
 Author URI:   https://magazine3.company/
 License:      GPL2
@@ -31,7 +31,7 @@ if (!defined('ABSPATH')) exit;
 
     } 
     private function defineConstants() {
-      define( 'WEBSTORIES_ENHANCER_VERSION', '1.1' );
+      define( 'WEBSTORIES_ENHANCER_VERSION', '1.2' );
       define( 'WEBSTORIES_ENHANCER_PATH', plugin_dir_path( __FILE__ ) );
       define( 'WEBSTORIES_ENHANCER_URL', plugins_url( '', __FILE__) );
       define( 'WEBSTORIES_ENHANCER_PLUGIN_FILE', __FILE__ );
@@ -44,6 +44,7 @@ if (!defined('ABSPATH')) exit;
       register_activation_hook(__FILE__, array( $this,'wseActivate'));
       add_action('admin_init',array( $this, 'wseRedirect'));
       add_action( 'admin_notices', array( $this, 'addAdminNotice'));
+      add_action( 'wp_ajax_wse_save_settings', array($this,'wseSaveSetting'));
 		}
 
     public function registerMenus() {
@@ -70,12 +71,14 @@ if (!defined('ABSPATH')) exit;
     }
 
     public function displaySettingsPage() {
+      require_once( WEBSTORIES_ENHANCER_PATH . '/includes/helper.php' );
       include WEBSTORIES_ENHANCER_PATH . 'templates/settings.php';
     }
 
     public function addShortcode() {
       // add shortcode only if Web stories / Make story plugin is installed and activated
       if ($this->checkDependablePlugins()) {
+        
       require_once( WEBSTORIES_ENHANCER_PATH . '/includes/shortcode.php' );
       $Web_Stories_Enhancer_Shortcode = new Web_Stories_Enhancer_Shortcode();
       }
@@ -97,6 +100,7 @@ if (!defined('ABSPATH')) exit;
           'nonce' => wp_create_nonce( 'wse-admin-nonce' ),
         )
         );
+        wp_enqueue_media();
       }
     }
 
@@ -135,6 +139,28 @@ if (!defined('ABSPATH')) exit;
             }
         }
     }
+
+    public function wseSaveSetting()
+    {
+      if ( ! isset( $_POST['wse_security_nonce'] ) ){
+        return; 
+     }
+     if ( !wp_verify_nonce( $_POST['wse_security_nonce'], 'wse-admin-nonce' ) ){
+        return;  
+     }
+     
+     $data=[];
+     $data['cta_banner'] = sanitize_text_field($_POST['cta_banner']); 
+     $data['cta_banner_slide'] = sanitize_text_field($_POST['cta_banner_slide']); 
+     $data['cta_enable'] = sanitize_text_field($_POST['cta_enable']); 
+     $data['cta_btn_text'] = sanitize_text_field($_POST['cta_btn_text']); 
+     $data['cta_btn_link'] = sanitize_text_field($_POST['cta_btn_link']); 
+      update_option('wse_settings',$data);
+      echo json_encode(array('status'=>'t'));  
+  
+     wp_die();  
+    }
+
 }
 
 $Web_Stories_Enhancer = new Web_Stories_Enhancer();
