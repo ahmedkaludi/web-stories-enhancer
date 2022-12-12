@@ -69,7 +69,7 @@ Yes, you easily contact us by submitting the support form in plugin setting page
 
 == Changelog ==
 
-= 1.2 - 10 November 2022 =
+= 1.2 - 10 December 2022 =
 * New : Advertisment Inserter for Webstories  #5
 * New : Shortcode with 3 listing types #5
 
