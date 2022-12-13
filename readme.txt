@@ -13,7 +13,7 @@ This is the Web Stories Enhancer Plugin for showing the web stories to the websi
 
 == Description ==
 This is the Web Stories Enhancer Plugin for showing the web stories to the website with the help of shortcode [web_stories_enhancer].
-It shows Instagram-style latest stories in the round circle format which outputs with the help of Shortcake. It can be literally everywhere. 
+It shows Instagram-style latest stories in the round circle format which outputs with the help of Shortcode. It can be literally everywhere. 
 
 <strong> Compatible Plugins  </strong> <br>
 * Web Stories by Google (**[view](https://wordpress.org/plugins/web-stories/)** )
