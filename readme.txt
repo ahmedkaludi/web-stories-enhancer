@@ -69,6 +69,9 @@ Yes, you easily contact us by submitting the support form in plugin setting page
 
 == Changelog ==
 
+= 1.3 - 23 November 2022 =
+* Fixed : Tested with WordPress 6.4 
+
 = 1.2 - 10 December 2022 =
 * New : Advertisment Inserter for Webstories  #5
 * New : Shortcode with 3 listing types #5
