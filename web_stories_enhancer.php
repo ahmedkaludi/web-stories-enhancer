@@ -3,7 +3,7 @@
 Plugin Name:  Web Stories Enhancer
 Plugin URI:   https://wordpress.org/plugins/web-stories-enhancer/
 Description:  Show Google Web Stories anywhere with the help of shortcode.
-Version:      1.3
+Version:      1.4
 Author:       Magazine3 
 Author URI:   https://magazine3.company/
 License:      GPL2
@@ -31,7 +31,7 @@ if (!defined('ABSPATH')) exit;
 
     } 
     private function defineConstants() {
-      define( 'WEBSTORIES_ENHANCER_VERSION', '1.3' );
+      define( 'WEBSTORIES_ENHANCER_VERSION', '1.4' );
       define( 'WEBSTORIES_ENHANCER_PATH', plugin_dir_path( __FILE__ ) );
       define( 'WEBSTORIES_ENHANCER_URL', plugins_url( '', __FILE__) );
       define( 'WEBSTORIES_ENHANCER_PLUGIN_FILE', __FILE__ );
