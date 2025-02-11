@@ -96,7 +96,7 @@ class Web_Stories_Enhancer_Shortcode
           
         }
       
-          $wse_content .= '<div class="'.$atts['type'].' web_stories_enhancer_main">';
+          $wse_content .= '<div class="'.esc_attr( $atts['type'] ).' web_stories_enhancer_main">';
           $wse_content .= '<div class="web_stories_enhancer_main_inner">';
           $wse_content .= '<div class="web_stories_enhancer_main_column"><ul>';
 

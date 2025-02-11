@@ -2,9 +2,9 @@
 Contributors: magazine3
 Tags:web stories, stories, amp, storytelling, google
 Requires at least: 4.0
-Tested up to: 6.4
+Tested up to: 6.7
 Requires PHP: 5.6
-Stable tag: 1.3
+Stable tag: 1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -68,6 +68,10 @@ Yes, you easily contact us by submitting the support form in plugin setting page
 6. Web Stories Enhancer support page
 
 == Changelog ==
+
+= 1.4 - 11 February 2025 =
+* Fixed : Fixed issue raised by Wordfence and Peter Thaleikis
+* Fixed : Tested with WordPress 6.7 
 
 = 1.3 - 23 November 2022 =
 * Fixed : Tested with WordPress 6.4 
