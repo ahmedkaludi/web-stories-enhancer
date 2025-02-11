@@ -2,7 +2,7 @@
 Contributors: magazine3
 Tags:web stories, stories, amp, storytelling, google
 Requires at least: 4.0
-Tested up to: 6.4
+Tested up to: 6.7
 Requires PHP: 5.6
 Stable tag: 1.3
 License: GPLv2 or later
